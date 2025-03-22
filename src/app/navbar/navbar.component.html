@@ -1,0 +1,23 @@
+<div class="navbar">
+    <div class="navbar-header">
+        <img [src]="logoPath" alt="Star Wars Logo" class="logo" />
+    </div>
+    <ul class="primary-navigation">
+        <li
+        *ngFor="let tab of tabInfo; let i = index"
+        [ngClass]="{
+            'selected-tab': currentTab === tab.data
+        }"
+        >
+        <a routerLink="/{{ tab.data }}" (click)="onTabIndexChanged(tab, i, $event)">
+            {{ tab.name }}
+        </a>
+        <span class="header-line"></span>
+        </li>
+    </ul>
+
+    <div class="secondary-navigation">
+        <app-theme-toggle></app-theme-toggle>
+    </div>
+</div>
+  

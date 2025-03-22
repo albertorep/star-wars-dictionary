@@ -1,0 +1,13 @@
+.collection-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px); /* subtract navbar height */
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    color: var(--text-color, #333);
+  }
+  
