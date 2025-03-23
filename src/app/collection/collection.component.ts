@@ -41,18 +41,26 @@ export class CollectionComponent implements OnInit {
 
   @HostListener('window:scroll')
   scrollHandler(): void {
+    const scrollThreshold = 200;
     const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
     const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
     const scrollSize = Math.round(scrollTop + window.innerHeight);
-
-    const nearBottom = scrollSize >= scrollHeight - 50;
-
-    if (nearBottom && this.scrollEnabled && !this.pageFinished && this.nextPage) {
+    if (
+      scrollSize >= scrollHeight - scrollThreshold &&
+      this.scrollEnabled &&
+      !this.pageFinished &&
+      this.nextPage
+    ) {
       this.fetchPage(this.nextPage);
     }
   }
 
   ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.isLoading = true;
