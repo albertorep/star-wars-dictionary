@@ -18,12 +18,15 @@
       <p>Retry</p>
     </div>
   </div>
-  <div class="card-grid" *ngIf="resources.length > 0">
+  <div class="card-grid">
     <app-card
       *ngFor="let item of resources"
       [resource]="item"
       (click)="onCardSelected(item)"
     ></app-card>
+    <ng-container *ngIf="showSkeletons">
+      <div class="card-skeleton" *ngFor="let n of skeletonArray"></div>
+    </ng-container>
   </div>
   <app-expanded-card
     *ngIf="selectedResource"

@@ -32,6 +32,10 @@ export class CollectionComponent implements OnInit {
   filters: string[] = [];
   filterValues: Record<string, string> = {};
   filterSubjects: Record<string, Subject<string>> = {};
+  skeletonCount = 5;
+  showSkeletons = false;
+  skeletonArray = Array.from({ length: this.skeletonCount });
+
 
   constructor(private route: ActivatedRoute, private titleService: Title, private starWarsService: StarWarsService,  private router: Router) {}
 
@@ -56,6 +60,7 @@ export class CollectionComponent implements OnInit {
     });
     this.route.paramMap.subscribe(params => {
       this.tabName = params.get('tabId') || 'Collection';
+      this.initFilterSubjects();
       this.filters = filterableFieldsMap[this.tabName as ResourceType] || [];
       this.titleService.setTitle(`${this.tabName} | Star Wars Explorer`);
     });
@@ -105,12 +110,46 @@ export class CollectionComponent implements OnInit {
   onFilterChange(filter: string, value: string) {
     this.filterSubjects[filter].next(value);
   }
+
+  initFilterSubjects(): void {
+    this.filters = filterableFieldsMap[this.tabName as ResourceType] || [];
+    this.filterValues = {};
+    this.filterSubjects = {};
+  
+    this.filters.forEach(filter => {
+      this.filterValues[filter] = '';
+      this.filterSubjects[filter] = new Subject<string>();
+  
+      this.filterSubjects[filter]
+        .pipe(
+          debounceTime(300),
+          distinctUntilChanged(),
+          switchMap(value => {
+            const trimmed = value.trim();
+            if (!trimmed) {
+              this.fetchPage(1);
+              return of([]);
+            }
+            return this.starWarsService.filterResources(this.tabName, filter, trimmed);
+          })
+        )
+        .subscribe(filteredResources => {
+          if (filteredResources.length > 0) {
+            this.resources = filteredResources;
+            this.nextPage = null;
+            this.pageFinished = true;
+          }
+        });
+    });
+  }
+  
   
   fetchPage(page: number): void {
     if (!this.tabName) return;
   
     this.isLoading = true;
     this.scrollEnabled = false;
+    this.showSkeletons = true;
   
     this.starWarsService.getResources(this.tabName, page).subscribe(result => {
       if (!result || result.resources.length === 0) {
@@ -137,11 +176,10 @@ export class CollectionComponent implements OnInit {
   
       this.isLoading = false;
       this.scrollEnabled = true;
-      if (page === 1) {
-        this.checkAndAutoFetchMore();
-      }
+      this.showSkeletons = false;
     });
   }
+  
   
   checkAndAutoFetchMore(): void {
     setTimeout(() => {

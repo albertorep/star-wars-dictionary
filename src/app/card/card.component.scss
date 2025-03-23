@@ -13,11 +13,21 @@
     font-weight: bold;
     font-size: 1.2rem;
     transition: transform 0.2s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInCard 2s ease forwards;
   
     &:hover {
       box-shadow: 2px 6px 8px rgba(0, 17, 255, 0.699);
       transform: scale(1.03);
       cursor: pointer;
+    }
+  }
+
+  @keyframes fadeInCard {
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   
