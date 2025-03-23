@@ -6,17 +6,15 @@
         </div>
         <ul class="primary-navigation">
             <li
-            *ngFor="let tab of tabInfo; let i = index"
-            [ngClass]="{
-                'selected-tab': currentTab === tab.data
-            }"
+              *ngFor="let tab of tabInfo"
+              [ngClass]="{ 'selected-tab': currentTab === tab.path }"
             >
-            <a routerLink="/{{ tab.data }}" (click)="onTabIndexChanged(tab, i, $event)">
+              <a (click)="onTabIndexChanged(tab)">
                 {{ tab.name }}
-            </a>
-            <span class="header-line"></span>
+              </a>
+              <span class="header-line"></span>
             </li>
-        </ul>
+          </ul>
         <div class="secondary-navigation">
             <app-theme-toggle></app-theme-toggle>
         </div>
