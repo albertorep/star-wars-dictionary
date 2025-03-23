@@ -21,7 +21,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #2196F3;
     transition: 0.4s;
     border-radius: 34px;
   }
@@ -41,7 +41,7 @@
   
   /* Checked slider (dark mode ON) */
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #EB212E;
   }
   
   /* Move the knob when checked */

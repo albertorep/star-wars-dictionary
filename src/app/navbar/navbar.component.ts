@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { IconComponent } from '../icon/icon.component';
 import { StarWarsService } from '../services/swapi-data.service';
+import { Tab } from '../interfaces/tab.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -12,16 +13,19 @@ import { StarWarsService } from '../services/swapi-data.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  tabInfo: { name: string, path: string }[] = [];
+  tabInfo: Tab[] = [{ name: 'Home', path: '' }];
   currentTab: string = '';
 
   constructor(private swService: StarWarsService, private router: Router) {}
 
   ngOnInit(): void {
     this.swService.getCategories().subscribe((tabs) => {
-      this.tabInfo = tabs;
-      if (tabs.length && !this.currentTab) {
-        this.currentTab = tabs[0].path;
+      this.tabInfo = [
+        ...this.tabInfo,
+        ...tabs,
+      ];
+      if (!this.currentTab) {
+        this.currentTab = this.tabInfo[0].path;
       }
     });
   }
