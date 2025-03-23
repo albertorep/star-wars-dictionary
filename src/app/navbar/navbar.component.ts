@@ -32,6 +32,10 @@ export class NavbarComponent implements OnInit {
 
   onTabIndexChanged(tab: any): void {
     this.currentTab = tab.path;
-    this.router.navigate(['/', tab.path]);
+    if (tab.path === '') {
+      this.router.navigate(['']);
+    } else {
+      this.router.navigate(['/', tab.path]);
+    }
   }
 }
