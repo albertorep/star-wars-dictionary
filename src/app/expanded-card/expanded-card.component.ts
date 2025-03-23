@@ -20,7 +20,7 @@ export class ExpandedCardComponent {
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['resource'] && this.resource) {
-      const excludeKeys = ['id', 'name', 'type', 'created', 'edited', 'url'];
+      const excludeKeys = ['id', 'name', 'type', 'created', 'edited', 'url', 'image'];
       this.entries = [];
   
       this.enrichedResource = { ...this.resource };

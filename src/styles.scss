@@ -36,7 +36,11 @@ body.dark-theme {
   }
 
   .card{
-    box-shadow: 0 4px 8px rgb(255 0 0 / 30%);
+    /* box-shadow: 0 4px 8px rgb(255 0 0 / 30%); */
+
+    &:hover{
+      box-shadow: 0 4px 8px rgb(255 0 0 / 30%);
+    }
   }
 }
   

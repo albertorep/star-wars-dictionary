@@ -10,7 +10,7 @@ export class ThemeToggleComponent implements OnInit {
 
   ngOnInit() {
     const savedTheme = localStorage.getItem('darkMode');
-    if (savedTheme === 'enabled') {
+    if (savedTheme === 'enabled' || savedTheme === null) {
       this.darkMode = true;
       document.body.classList.add('dark-theme');
     }
