@@ -26,5 +26,13 @@ body.dark-theme {
   .navbar{
     box-shadow: 0 8px 8px rgb(239 13 13 / 10%);;
   } 
+
+  .header-line {
+    background-color: #EB212E;
+  }
+
+  .selected-tab a {
+    color: #EB212E !important;
+  }
 }
   
