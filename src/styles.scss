@@ -12,8 +12,21 @@ body {
   }
 }
 
+:root {
+  --focus-border-color: #007bff;
+  --app-background-color: white;
+  --card-background-color: #f4f4f4;
+  --filter-background-color: #f4f4f4;
+  --filter-text-color: #111;
+}
+
 /* Dark mode */
 body.dark-theme {
+  --focus-border-color: #e53935;
+  --app-background-color: #121212;
+  --card-background-color: #1a1a1a;
+  --filter-background-color: #1a1a1a;
+  --filter-text-color: #b0bec5;
   background-color: #121212;
   color: white;
   a{
@@ -40,6 +53,12 @@ body.dark-theme {
 
     &:hover{
       box-shadow: 0 4px 8px rgb(255 0 0 / 30%);
+    }
+  }
+
+  .filter-input {
+    &:focus {
+      border-color: rgb(255 0 0 / 30%);
     }
   }
 }

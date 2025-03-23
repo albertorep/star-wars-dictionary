@@ -5,6 +5,15 @@ import { Resource, ResourceType } from '../interfaces/resource.interface';
 import { adaptResource } from '../adapters/resource.adapter';
 import { BehaviorSubject } from 'rxjs';
 
+export const filterableFieldsMap: Record<ResourceType, string[]> = {
+  [ResourceType.People]: ['name'],
+  [ResourceType.Films]: ['title'],
+  [ResourceType.Planets]: ['name'],
+  [ResourceType.Starships]: ['name', 'model'],
+  [ResourceType.Vehicles]: ['name', 'model'],
+  [ResourceType.Species]: ['name'],
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,7 +46,7 @@ export class StarWarsService {
   
 
   getResources(category: string, page = 1): Observable<{ resources: Resource[], count: number }> {
-    return this.http.get<any>(`${this.baseUrl}${category}?page=${page}&expanded=true`).pipe(
+    return this.http.get<any>(`${this.baseUrl}${category}?page=${page}&limit=10&expanded=true`).pipe(
       map(response => {
         const resources = (response.results || response.result || []).map((item: any) => {
           const id = item.uid;
@@ -52,6 +61,25 @@ export class StarWarsService {
       catchError(error => {
         console.error(`Error fetching ${category} (page ${page}):`, error);
         return of({ resources: [], count: 0 });
+      })
+    );
+  }
+  
+  filterResources(category: string, field: string, value: string): Observable<Resource[]> {
+    const url = `${this.baseUrl}${category}?${field}=${encodeURIComponent(value)}`;
+  
+    return this.http.get<any>(url).pipe(
+      map(response => {
+        const results = response.results || response.result || [];
+        return results.map((item: any) => {
+          const id = item.uid;
+          const props = item.properties;
+          return adaptResource(props, category as ResourceType, id);
+        });
+      }),
+      catchError(err => {
+        console.error(`Error filtering ${category} by ${field}:`, err);
+        return of([]);
       })
     );
   }

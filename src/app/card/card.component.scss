@@ -1,9 +1,10 @@
 .card {
-    background-color: #1a1a1a;
+    background-color: var(--card-background-color);
     border-radius: 12px;
     padding: 1.5rem;
     color: #feda4a;
-    /* box-shadow: 2px 6px 8px rgba(0, 17, 255, 0.699); */
+    text-shadow: -1px -1px 0 #51515191, 1px -1px 0 #51515191, -1px 1px 0 #51515191, 1px 1px 0 #51515191;
+    box-shadow:  2px 6px 8px rgb(0 0 0 / 70%);
     min-height: 200px;
     display: flex;
     align-items: center;

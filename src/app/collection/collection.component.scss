@@ -70,3 +70,29 @@
 .retry{
   cursor: pointer;
 }
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 0 1rem;
+  width: 100%;
+
+  .filter-input {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background-color: var(--filter-background-color);
+    color: var(--filter-text-color, #b0bec5);
+    font-size: 1rem;
+    outline: none;
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:focus {
+      border-color: var(--focus-border-color);
+    }
+  }
+}
