@@ -1,3 +1,66 @@
 .app {
     height: 100%;
+    &-loading {
+        position: fixed;
+        inset: 0;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        font-family: 'Arial', sans-serif;
+        transition: opacity 1s ease-out, transform 1s ease-out;
+
+        .css-loader {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+          }
+          
+          .star {
+            position: absolute;
+            top: -10px;
+            width: 6px;
+            height: 6px;
+            background: #feda4a;
+            border-radius: 2px;
+            animation: fall linear infinite;
+            opacity: 0.8;
+          }
+          
+          @keyframes fall {
+            0% {
+              transform: translateY(0) translateX(0);
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(240px) translateX(20px);
+              opacity: 0;
+            }
+          }
+          
+          .loading-text {
+            color: #feda4a;
+            font-size: 1.5rem;
+            text-shadow: 0 0 4px #feda4a;
+            animation: fadeInOut 4s ease-in-out infinite;
+            text-align: center;
+            max-width: 80%;
+          }
+          
+          @keyframes fadeInOut {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+          }
+    }
 }
+
+.app-loading.fade-out {
+    opacity: 0;
+    transform: scale(1.05);
+  }

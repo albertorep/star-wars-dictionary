@@ -1,9 +1,16 @@
-<div class="collection">
+<div class="collection"><!-- *ngIf="!isLoading"> -->
   <h1 class="page-title">{{ tabName | titlecase }}</h1>
-  <div class="card-grid">
-    <app-card
-      *ngFor="let item of resources"
-      [resource]="item">
-    </app-card>
+  <div *ngIf="loadError" class="retry-wrapper">
+    <div class="retry-container">
+      <p>Something went wrong. No data found.</p>
+      <app-icon class="retry" [width]="'40px'" [isSquare]="true" name="retry" (click)="retryFetch()"></app-icon>
+      <p>Retry</p>
+    </div>
   </div>
+  <div class="card-grid" *ngIf="resources.length > 0 ">
+    <app-card *ngFor="let item of resources" [resource]="item"></app-card>
+  </div>
+</div>
+<div *ngIf="false" class="collection-loader">
+  <div class="css-loader"></div>
 </div>

@@ -8,4 +8,10 @@
   background: url('../../assets/icons/star-wars-icon.svg') no-repeat center center !important;
   background-size: contain !important;
 }
+
+.icon-retry {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/star-retry.svg') no-repeat center center !important;
+  background-size: contain !important;
+}
   
