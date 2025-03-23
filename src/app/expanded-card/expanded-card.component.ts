@@ -17,6 +17,8 @@ export class ExpandedCardComponent {
   isClosing = false;
   enrichedResource!: Resource;
   hasImage = false;
+  isLoading = false;
+  showLoadingMessage = false;
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['resource'] && this.resource) {
@@ -24,7 +26,13 @@ export class ExpandedCardComponent {
       this.entries = [];
   
       this.enrichedResource = { ...this.resource };
-  
+      this.isLoading = true;
+      this.showLoadingMessage = false;
+      const timeout = setTimeout(() => {
+        if (this.isLoading) {
+          this.showLoadingMessage = true;
+        }
+      }, 5000);
       this.enhanceResource(this.resource).then((enhanced) => {
         this.enrichedResource = enhanced;
         this.hasImage = !!enhanced.image;
@@ -36,6 +44,8 @@ export class ExpandedCardComponent {
             value !== 'n/a' &&
             !(Array.isArray(value) && value.length === 0)
         );
+        this.isLoading = false;
+        this.showLoadingMessage = false;
       });
     }
   }

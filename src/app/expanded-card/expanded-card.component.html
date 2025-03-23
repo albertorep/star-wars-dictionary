@@ -1,20 +1,33 @@
 <div class="overlay" (click)="triggerClose()">
-    <div class="expanded-card" [ngClass]="{ closing: isClosing }" (click)="$event.stopPropagation()">
+  <div class="expanded-card" [ngClass]="{ closing: isClosing }" (click)="$event.stopPropagation()">
+    <h2>{{ resource.name }}</h2>
+    <ng-container *ngIf="!isLoading; else loadingTemplate">
+      <div class="column-containers">
         <div class="left-column" *ngIf="hasImage">
-            <img [src]="enrichedResource.image" alt="{{ resource.name }}" class="resource-image" />
+          <img [src]="enrichedResource.image" alt="{{ resource.name }}" class="resource-image" />
         </div>
         <div class="right-column">
-            <h2>{{ resource.name }}</h2>
-            <div class="attributes">
-                <div class="attribute" *ngFor="let entry of entries">
-                <strong>{{ formatKey(entry[0]) }}:</strong>
-                <span [ngClass]="{ 'crawl-text': entry[0] === 'opening_crawl' }">
-                    {{ entry[1] }}
-                </span>
-                </div>
+          <div class="attributes">
+            <div class="attribute" *ngFor="let entry of entries">
+              <strong>{{ formatKey(entry[0]) }}:</strong>
+              <span [ngClass]="{ 'crawl-text': entry[0] === 'opening_crawl' }">
+                {{ entry[1] }}
+              </span>
             </div>
+          </div>
         </div>
-        <button class="close-btn" (click)="triggerClose()">X</button>
-    </div>
+      </div>
+    </ng-container>
+    <ng-template #loadingTemplate>
+      <div class="loader-wrapper">
+        <div class="css-loader"></div>
+        <p class="loading-message" *ngIf="showLoadingMessage">
+          Rebel transmissions struggling to pass the blockade on Hoth...
+        </p>
+      </div>
+    </ng-template>
+    <button class="close-btn" (click)="triggerClose()">X</button>
+  </div>
 </div>
+  
   

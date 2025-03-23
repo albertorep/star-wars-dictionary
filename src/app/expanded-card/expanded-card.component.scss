@@ -16,6 +16,7 @@
     background-color: var(--card-background-color);
     color: #feda4a;
     display: flex;
+    flex-direction: column;
     max-width: 900px;
     width: 100%;
     height: 80%;
@@ -41,6 +42,14 @@
         }
     }
 
+  }
+
+  .column-containers{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
   }
   
   .left-column {
@@ -129,5 +138,46 @@
       transform: scale(1.2);
     }
   }
+
+  .loader-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    //justify-content: center;
+    padding-top: 25%;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .css-loader {
+    width: 60px;
+    height: 60px;
+    border: 3px solid #feda4a;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: loader 1s linear infinite;
+  }
+
+  @keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+  }
+
+  .loading-message {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    max-width: 300px;
+  }
+  
+  
   
   
