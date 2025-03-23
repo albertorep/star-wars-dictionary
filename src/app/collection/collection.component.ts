@@ -6,11 +6,12 @@ import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { CardComponent } from '../card/card.component';
 import { StarWarsService } from '../services/swapi-data.service';
 import { IconComponent } from '../icon/icon.component';
+import { ExpandedCardComponent } from '../expanded-card/expanded-card.component';
 
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.component.html',
-  imports: [TitleCasePipe, CardComponent, NgFor, NgIf, IconComponent],
+  imports: [TitleCasePipe, CardComponent, NgFor, NgIf, IconComponent, ExpandedCardComponent],
   styleUrls: ['./collection.component.scss']
 })
 export class CollectionComponent implements OnInit {
@@ -22,6 +23,7 @@ export class CollectionComponent implements OnInit {
   nextPage: number | null = 2;
   isLoading: boolean = true;
   loadError: boolean = false;
+  selectedResource: Resource | null = null;
 
   constructor(private route: ActivatedRoute, private titleService: Title, private starWarsService: StarWarsService,  private router: Router) {}
 
@@ -76,5 +78,13 @@ export class CollectionComponent implements OnInit {
   
       this.isLoading = false;
     });
+  }
+
+  onCardSelected(resource: Resource): void {
+    this.selectedResource = resource;
+  }
+  
+  closeExpandedCard(): void {
+    this.selectedResource = null;
   }
 }

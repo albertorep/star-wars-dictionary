@@ -7,9 +7,18 @@
       <p>Retry</p>
     </div>
   </div>
-  <div class="card-grid" *ngIf="resources.length > 0 ">
-    <app-card *ngFor="let item of resources" [resource]="item"></app-card>
+  <div class="card-grid" *ngIf="resources.length > 0">
+    <app-card
+      *ngFor="let item of resources"
+      [resource]="item"
+      (click)="onCardSelected(item)"
+    ></app-card>
   </div>
+  <app-expanded-card
+    *ngIf="selectedResource"
+    [resource]="selectedResource"
+    (close)="closeExpandedCard()"
+  ></app-expanded-card>
 </div>
 <div *ngIf="false" class="collection-loader">
   <div class="css-loader"></div>

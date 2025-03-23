@@ -12,5 +12,6 @@ export interface Resource {
     name: string;
     type: ResourceType;
     description?: string;
+    image?: string;
     [key: string]: any;
 }

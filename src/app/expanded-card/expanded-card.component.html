@@ -1,0 +1,18 @@
+<div class="overlay" (click)="triggerClose()">
+    <div class="expanded-card" [ngClass]="{ closing: isClosing }" (click)="$event.stopPropagation()">
+        <div class="left-column">
+            <div class="image-placeholder">🖼️</div>
+        </div>
+        <div class="right-column">
+            <h2>{{ resource.name }}</h2>
+            <div class="attributes">
+                <div class="attribute" *ngFor="let entry of entries">
+                <strong>{{ formatKey(entry[0]) }}:</strong>
+                <span>{{ entry[1] }}</span>
+                </div>
+            </div>
+        </div>
+        <button class="close-btn" (click)="triggerClose()">X</button>
+    </div>
+</div>
+  
