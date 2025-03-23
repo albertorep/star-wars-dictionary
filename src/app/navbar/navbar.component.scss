@@ -1,3 +1,5 @@
+@use '../../styles/layout/breakpoints' as bp;
+
 .navbar {
     position: fixed;
     z-index: 10;
@@ -38,11 +40,25 @@
     display: flex;
     margin: 0;
     padding: 0;
+    overflow-y: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+
+    &::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
   }
   
   .primary-navigation li {
     margin: 0 10px;
     position: relative;
+    @include bp.respond-to(phonePortrait){
+      margin: 0 5px;
+    }
+    @include bp.respond-to(phone){
+      margin: 0 5px;
+    }
+    
   }
   
   .primary-navigation li a {
@@ -50,6 +66,12 @@
     /* color: #333; */
     font-weight: 500;
     cursor: pointer;
+    @include bp.respond-to(mobile){
+      font-size: 16px;
+    }
+/*     @include bp.respond-to(phone){
+      font-size: 10px;
+    } */
   }
   
   .selected-tab a {

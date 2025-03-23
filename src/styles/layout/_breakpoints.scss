@@ -1,0 +1,101 @@
+// ================================================================================================
+//   File name: _breakpoints.scss
+//   Description: Breakpoints used throughout the application to drive responsive design
+// ================================================================================================
+$break-small: 480px;
+$break-large: 900px;
+$break-details: 768px;
+$break-my-content: 600px;
+$break-tablet-portrait: 950px;
+$break-tablet-landscape: 1080px;
+
+//IPAD AIR LANDSCAPE
+$ipad-air-width-landscape: 1180px;
+$ipad-air-height-landscape: 820px;
+
+//NEST HUB
+$nest-hub-width: 1024px;
+$nest-hub-height: 600px;
+
+@mixin respond-to($media) {
+  @if $media == min-phone {
+    @media only screen and (max-width: ($break-small - 1)) {
+      @content;
+    }
+  }
+  @if $media == phone {
+    @media only screen and (max-width: $break-small) {
+      @content;
+    }
+  } @else if $media == phonePortrait {
+    @media only screen and (max-width: ($break-tablet-portrait - 1)) {
+      @content;
+    }
+  } @else if $media == phoneLandscape {
+    @media only screen and (min-width: $break-small) and (max-width: $break-tablet-portrait) and (max-height: $break-small) {
+      @content;
+    }
+  } @else if $media == demographicPhone {
+    @media only screen and (max-width: ($break-details - 28)) {
+      @content;
+    }
+  } @else if $media == mobileMyContent {
+    @media only screen and (max-width: $break-my-content) {
+      @content;
+    }
+  } @else if $media == tablet {
+    @media only screen and (min-width: ($break-small + 1)) and (max-width: $break-large) {
+      @content;
+    }
+  } @else if $media == desktop {
+    @media only screen and (min-width: ($break-large + 1)) {
+      @content;
+    }
+  } @else if $media == mobile {
+    @media only screen and (max-width: $break-large) {
+      @content;
+    }
+  } @else if $media == phoneDetailsLandscape {
+    @media only screen and (max-width: $break-details) and (orientation: landscape) {
+      @content;
+    }
+  } @else if $media == tabletPortrait {
+    @media only screen and (min-width: $break-small) and (max-width: ($break-tablet-portrait - 1)) and (min-height: $break-small) {
+      @content;
+    }
+  } @else if $media == tabletLandscape {
+    @media only screen and (min-width: $break-tablet-portrait) and (max-width: ($break-tablet-landscape - 1)) {
+      @content;
+    }
+  } @else if $media == airpadLandscapeNesthub {
+    @media only screen and (width: $ipad-air-width-landscape), (width: $nest-hub-width) and (height: $ipad-air-height-landscape), (height: $nest-hub-height) {
+      @content;
+    }
+  } @else if $media == onlyDesktop {
+    @media only screen and (min-width: $break-tablet-landscape) {
+      @content;
+    }
+  }
+}
+
+@mixin respond-to-height($media) {
+  @media only screen and (max-height: $media) {
+    @content;
+  }
+}
+
+@mixin respond-to-width($media) {
+  @media only screen and (max-width: $media) {
+    @content;
+  }
+}
+
+@mixin respond-to-both($media, $height) {
+  @include respond-to($media) {
+    @content;
+  }
+
+  @include respond-to-height($height) {
+    @content;
+  }
+}

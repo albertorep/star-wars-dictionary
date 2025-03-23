@@ -1,3 +1,4 @@
+@use '../../styles/layout/breakpoints' as bp;
 .overlay {
     position: fixed;
     top: 0;
@@ -9,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    /* padding: 2rem; */
   }
   
   .expanded-card {
@@ -25,6 +26,8 @@
     overflow: hidden;
     animation: zoomIn 0.7s ease-out;
     transition: transform 0.7s ease, opacity 0.7s ease;
+    margin-left: 10px;
+    margin-right: 10px;
 
     &.closing {
         transform: scale(0.9);
@@ -50,6 +53,9 @@
     width: 100%;
     max-width: 900px;
     overflow: hidden;
+    @media screen and (max-width: 690px){
+      flex-direction: column;
+    }
   }
   
   .left-column {
@@ -63,8 +69,16 @@
     img.resource-image {
       max-width: 100%;
       max-height: 100%;
+      min-width: 250px;
       border-radius: 12px;
       object-fit: contain;
+      @media screen and (max-width: 690px){
+        max-width: 250px;
+      }
+      @include bp.respond-to(phone){
+        max-height: 250px;
+      }
+      
     }
   }
   
@@ -88,6 +102,9 @@
 
     &::-webkit-scrollbar {
         display: none; /* Chrome/Safari */
+    }
+    @media screen and (max-width: 690px){
+      padding: 1rem;
     }
   }
 

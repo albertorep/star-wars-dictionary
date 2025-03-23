@@ -1,3 +1,5 @@
+@use '../../styles/layout/breakpoints' as bp;
+
 .home-container {
     display: flex;
     flex-direction: column;
@@ -11,11 +13,23 @@
         font-size: 2.5rem;
         margin-bottom: 1rem;
         color: #feda4a;
+        @include bp.respond-to(phone){
+            font-size: 1.5rem;
+        }
+        @include bp.respond-to(phonePortrait){
+            font-size: 2rem;
+        }
     }
 
     p {
         font-size: 1.2rem;
         color: #555;
+        @include bp.respond-to(phone){
+            font-size: 1rem;
+        }
+        @include bp.respond-to(phonePortrait){
+            font-size: 1.1rem;
+        }
     }
 
     body.dark-theme & {

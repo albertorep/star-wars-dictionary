@@ -1,6 +1,6 @@
 import { NgClass, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { IconComponent } from '../icon/icon.component';
 import { StarWarsService } from '../services/swapi-data.service';
@@ -26,6 +26,16 @@ export class NavbarComponent implements OnInit {
       ];
       if (!this.currentTab) {
         this.currentTab = this.tabInfo[0].path;
+      }
+    });
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const url = event.urlAfterRedirects || event.url;
+        const path = url.split('/')[1]; // first segment after /
+    
+        const matchingTab = this.tabInfo.find(tab => tab.path === path);
+        this.currentTab = matchingTab ? matchingTab.path : '';
       }
     });
   }
