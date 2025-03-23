@@ -1,7 +1,7 @@
 <div class="overlay" (click)="triggerClose()">
     <div class="expanded-card" [ngClass]="{ closing: isClosing }" (click)="$event.stopPropagation()">
-        <div class="left-column">
-            <div class="image-placeholder">🖼️</div>
+        <div class="left-column" *ngIf="hasImage">
+            <img [src]="enrichedResource.image" alt="{{ resource.name }}" class="resource-image" />
         </div>
         <div class="right-column">
             <h2>{{ resource.name }}</h2>

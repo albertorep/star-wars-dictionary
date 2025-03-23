@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Resource, ResourceType } from '../interfaces/resource.interface';
-import { NgClass, NgFor, TitleCasePipe } from '@angular/common';
+import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-expanded-card',
-  imports: [TitleCasePipe, NgFor, NgClass],
+  imports: [TitleCasePipe, NgFor, NgClass, NgIf],
   templateUrl: './expanded-card.component.html',
   styleUrl: './expanded-card.component.scss'
 })
@@ -16,6 +16,7 @@ export class ExpandedCardComponent {
   entries: [string, any][] = [];
   isClosing = false;
   enrichedResource!: Resource;
+  hasImage = false;
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['resource'] && this.resource) {
@@ -26,6 +27,7 @@ export class ExpandedCardComponent {
   
       this.enhanceResource(this.resource).then((enhanced) => {
         this.enrichedResource = enhanced;
+        this.hasImage = !!enhanced.image;
         this.entries = Object.entries(enhanced).filter(
           ([key, value]) => !excludeKeys.includes(key.toLowerCase()) &&
             value !== null &&
