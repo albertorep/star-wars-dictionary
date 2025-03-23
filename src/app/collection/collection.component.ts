@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Resource } from '../interfaces/resource.interface';
+import { NgFor, TitleCasePipe } from '@angular/common';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.component.html',
+  imports: [TitleCasePipe, CardComponent, NgFor],
   styleUrls: ['./collection.component.scss']
 })
 export class CollectionComponent implements OnInit {

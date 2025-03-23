@@ -1,4 +1,9 @@
-<div class="collection-container">
-    <h1>{{ tabName }}</h1>
+<div class="collection">
+  <h1 class="page-title">{{ tabName | titlecase }}</h1>
+  <div class="card-grid">
+    <app-card
+      *ngFor="let item of resources"
+      [resource]="item">
+    </app-card>
   </div>
-  
+</div>

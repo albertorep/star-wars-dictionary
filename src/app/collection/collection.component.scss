@@ -1,13 +1,21 @@
-.collection-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 60px); /* subtract navbar height */
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 3rem;
-    color: var(--text-color, #333);
-  }
-  
+.collection {
+  padding: 120px 32px 32px; // leave room for navbar
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.page-title {
+  color: #feda4a;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+}
