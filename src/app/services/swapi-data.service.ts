@@ -9,18 +9,18 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class StarWarsService {
-  private baseUrl = 'https://swapi.dev/api/';
+  private baseUrl = 'https://swapi.tech/api/';
   private tabsLoadingSubject = new BehaviorSubject<boolean>(true);
   tabsLoading$ = this.tabsLoadingSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getCategories(): Observable<{ name: string; path: string }[]> {
-    this.tabsLoadingSubject.next(true); // signal loading started
+    this.tabsLoadingSubject.next(true);
   
-    return this.http.get<{ [key: string]: string }>(this.baseUrl).pipe(
+    return this.http.get<{ result: { [key: string]: string } }>(this.baseUrl).pipe(
       map(response =>
-        Object.entries(response).map(([key, url]) => ({
+        Object.entries(response.result).map(([key, url]) => ({
           name: this.formatCategoryName(key),
           path: key
         }))
@@ -29,29 +29,33 @@ export class StarWarsService {
       catchError(error => {
         console.error('Error loading categories:', error);
         this.tabsLoadingSubject.next(false);
-        return of([]); // fallback
+        return of([]);
       })
     );
   }
   
+  
 
-  getResources(category: string, page = 1): Observable<{ resources: Resource[]; count: number }> {
-    return this.http.get<any>(`${this.baseUrl}${category}/?page=${page}`).pipe(
+  getResources(category: string, page = 1): Observable<{ resources: Resource[], count: number }> {
+    return this.http.get<any>(`${this.baseUrl}${category}?page=${page}&expanded=true`).pipe(
       map(response => {
-        const resources = response.results.map((item: any) =>
-          adaptResource(item, category as ResourceType)
-        );
+        const resources = (response.results || response.result || []).map((item: any) => {
+          const id = item.uid;
+          const props = item.properties;
+          return adaptResource(props, category as ResourceType, id);
+        });
         return {
           resources,
-          count: response.count
+          count: response.total_records
         };
       }),
       catchError(error => {
-        console.error(`Error fetching resources for ${category} page ${page}:`, error);
-        return of({ resources: [], count: 0 }); // fallback
+        console.error(`Error fetching ${category} (page ${page}):`, error);
+        return of({ resources: [], count: 0 });
       })
     );
   }
+  
 
   private formatCategoryName(key: string): string {
     return key.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase());

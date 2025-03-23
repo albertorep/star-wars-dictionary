@@ -1,22 +1,16 @@
 import { Resource, ResourceType } from '../interfaces/resource.interface';
 
-export function adaptResource(item: any, type: ResourceType): Resource {
-  const id = extractIdFromUrl(item.url);
-  const name = item.name || item.title || 'Unknown';
-  const description = generateDescription(item, type);
+export function adaptResource(data: any, type: ResourceType, id: string): Resource {
+  const name = data.name || data.title || 'Unknown';
+  const description = generateDescription(data, type);
 
   return {
     id,
     name,
     type,
     description,
-    ...item // Include everything else for flexibility
+    ...data
   };
-}
-
-function extractIdFromUrl(url: string): string {
-  const parts = url.split('/').filter(Boolean);
-  return parts[parts.length - 1];
 }
 
 function generateDescription(item: any, type: ResourceType): string {
