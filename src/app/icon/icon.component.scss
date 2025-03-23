@@ -1,0 +1,11 @@
+.icon-button-base {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-main {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/star-wars-icon.svg') no-repeat center center !important;
+  background-size: contain !important;
+}
+  
