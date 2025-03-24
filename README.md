@@ -6,6 +6,12 @@ A fully responsive Angular 19 application that consumes the [SWAPI.tech](https:/
 
 ---
 
+## 📸 Demo
+
+[![Watch the demo](https://img.youtube.com/vi/d85QefZFc5A/maxresdefault.jpg)](https://www.youtube.com/watch?v=d85QefZFc5A)
+
+---
+
 ## 🚀 Getting Started
 
 This project was built with **Angular 19**.  
@@ -77,12 +83,6 @@ http://localhost:4200/
 - 🖼️ Posters (images) for movies and for characters
 - 📄 Expanded view for looking into the details of the contents. Including lists of names of others resources included. 
 - ⏳ Skeleton loaders and async animations
-
----
-
-## 📸 Demo
-
-_A demo video or GIF showcasing the project will be added here._
 
 ---
 
