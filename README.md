@@ -1,59 +1,96 @@
-# StarWarsApp
+# 🌌 Star Wars Explorer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+A fully responsive Angular 19 application that consumes the [SWAPI.tech](https://swapi.tech) and [Akabab Star Wars API](https://akabab.github.io/starwars-api/) to display Star Wars resources with filters, infinite scroll or pagination, dark mode, mobile navigation, and an animated expanded detail view.
 
-## Development server
+> This project was built entirely for fun and practice. May the Force be with you.
 
-To start a local development server, run:
+---
+
+## 🚀 Getting Started
+
+This project was built with **Angular 19**.  
+Make sure your local environment is using **Angular CLI v19** and compatible dependencies.
+
+---
+
+### 📦 Prerequisites
+
+Ensure the following are installed:
+
+- [Node.js (v18+ recommended)](https://nodejs.org/)
+- [npm (v9+ recommended)](https://www.npmjs.com/)
+- Angular CLI **v19**
+
+> ⚠️ This app requires Angular 19 to run properly.
+
+Install Angular CLI globally:
+
+```bash
+npm install -g @angular/cli@19
+```
+
+---
+
+### 📥 Clone the Repository
+
+```bash
+git clone https://github.com/albertorep/star-wars-dictionary.git
+cd star-wars-dictionary
+```
+
+---
+
+### 📦 Install Dependencies
+
+```bash
+npm install
+```
+
+If you're using `nvm` or similar, make sure to use a compatible Node version:
+
+```bash
+nvm use 18
+```
+
+---
+
+### 🧪 Run the App Locally
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Then open your browser at:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+http://localhost:4200/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## ✨ Features
 
-## Building
+- 🔍 Filter by category (name, title, model, etc.)
+- 📜 Infinite scroll OR traditional next/back pagination toggle
+- 💡 Dark mode toggle
+- 📱 Responsive design
+- 🖼️ Posters (images) for movies and for characters
+- 📄 Expanded view for looking into the details of the contents. Including lists of names of others resources included. 
+- ⏳ Skeleton loaders and async animations
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 📸 Demo
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+_A demo video or GIF showcasing the project will be added here._
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 🧠 Credits
 
-```bash
-ng test
-```
+- [SWAPI.tech](https://swapi.tech)
+- [Akabab Star Wars API](https://akabab.github.io/starwars-api/)
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🪐 May the force be with you.
