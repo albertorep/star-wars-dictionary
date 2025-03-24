@@ -76,7 +76,7 @@
   gap: 1rem;
   margin: 1rem 0;
   padding: 0 1rem;
-  width: 100%;
+  width: 70%;
   justify-content: center;
 
 
@@ -88,6 +88,10 @@
     color: var(--filter-text-color, #b0bec5);
     font-size: 1rem;
     outline: none;
+
+    @media only screen and (max-width: 850px) {
+      max-width: 120px;
+    }
 
     &::placeholder {
       color: #999;
@@ -117,3 +121,113 @@ body.dark-theme .card-skeleton {
   100% { opacity: 0.6; }
 }
 
+.pagination-toggle {
+  display: flex;
+  align-items: center;
+ /*  margin: 1rem 0; */
+
+  .switch-with-label {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 36px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #eb212e;
+      border-radius: 34px;
+      transition: background-color 0.4s;
+
+      &::before {
+        content: '';
+        position: absolute;
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 5px;
+        background-color: white;
+        border-radius: 50%;
+        transition: transform 0.4s;
+        z-index: 2;
+      }
+
+      .label {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: bold;
+        font-size: 0.8rem;
+        color: white;
+        z-index: 1;
+        transition: left 0.4s, right 0.4s;
+        font-size: 10px;
+      }
+
+      .label.scroll {
+        left: 12px;
+      }
+
+      .label.next {
+        right: 12px;
+      }
+    }
+
+    input:checked + .slider {
+      background-color: #007bff;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(44px);
+    }
+  }
+}
+
+
+
+
+.pagination-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+
+  button {
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    background: var(--button-bg);
+    color: var(--button-color);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
+
+.options-container{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  @media only screen and (max-width: 850px) {
+    justify-content: flex-start;
+  }
+}
+
+.pagination-title{
+  font-size: 12px;
+}

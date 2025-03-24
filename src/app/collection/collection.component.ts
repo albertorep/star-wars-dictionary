@@ -37,12 +37,14 @@ export class CollectionComponent implements OnInit {
   showSkeletons = false;
   throwPage: boolean = false;
   skeletonArray = Array.from({ length: this.skeletonCount });
+  paginationMode: 'scroll' | 'buttons' = 'scroll';
 
 
   constructor(private route: ActivatedRoute, private titleService: Title, private starWarsService: StarWarsService,  private router: Router) {}
 
   @HostListener('window:scroll')
   scrollHandler(): void {
+    if (this.paginationMode !== 'scroll') return;
     const scrollThreshold = 200;
     const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
     const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
@@ -55,6 +57,10 @@ export class CollectionComponent implements OnInit {
     ) {
       this.fetchPage(this.nextPage);
     }
+  }
+
+  get showPaginationButtons(): boolean {
+    return this.paginationMode === 'buttons' && this.totalPages > 1;
   }
 
   ngOnInit(): void {
@@ -163,14 +169,64 @@ export class CollectionComponent implements OnInit {
     });
   }
   
+  togglePaginationMode() {
+    this.showSkeletons = false;
+    if (this.paginationMode === 'scroll') {
+      this.paginationMode = 'buttons';
+      if(!this.scrollEnabled){
+        this.throwPage = true;
+      }
+      this.skeletonCount = 10;
+      this.skeletonArray = Array.from({ length: this.skeletonCount });
+      this.currentPage = 1;
+      this.totalPages = Math.ceil(this.itemCount / 10);
+      this.nextPage = this.currentPage < this.totalPages ? this.currentPage + 1 : null;
+      this.resources = this.resources.slice(0, 10);
+    } else {
+      this.paginationMode = 'scroll';
+      this.skeletonCount = 5;
+      this.skeletonArray = Array.from({ length: this.skeletonCount });
+      if(this.currentPage !== 1){
+        this.resources = [];
+        this.scrollEnabled = false;
+        this.showSkeletons = true;
+        this.pageFinished = false;
+        this.fetchPage(1);
+      }
+      else if(!this.pageFinished && this.nextPage){
+        this.scrollEnabled = false;
+        this.showSkeletons = true;
+        this.fetchPage(this.nextPage);
+      }
+    }
+  }
+  
+  
+  goToNextPage() {
+    if (this.nextPage) {
+      this.fetchPage(this.nextPage);
+    }
+  }
+  
+  goToPrevPage() {
+    const prevPage = this.currentPage > 1 ? this.currentPage - 1 : 1;
+    if (prevPage !== this.currentPage) {
+      this.fetchPage(prevPage);
+    }
+  }
+  
   
   fetchPage(page: number): void {
     if (!this.tabName) return;
   
     this.isLoading = true;
+    this.loadError = false;
     this.scrollEnabled = false;
     this.showSkeletons = true;
-  
+    if(this.paginationMode === 'buttons'){
+      this.resources = [];
+      this.showSkeletons = true;
+    }
     this.starWarsService.getResources(this.tabName, page).subscribe(result => {
       if(this.throwPage){
         this.scrollEnabled = true;
@@ -183,27 +239,26 @@ export class CollectionComponent implements OnInit {
           this.loadError = true;
         }
         this.pageFinished = true;
-      } else {
-        this.loadError = false;
-  
-        if (page === 1) {
-          this.resources = result.resources;
-        } else {
-          this.resources = [...this.resources, ...result.resources];
-        }
-  
-        this.itemCount = result.count;
-        this.totalPages = Math.ceil(result.count / 10);
-        this.currentPage = page;
-        this.nextPage = this.currentPage < this.totalPages ? this.currentPage + 1 : null;
-        this.pageFinished = !this.nextPage;
+        this.isLoading = false;
+        return;
       }
   
+      this.itemCount = result.count;
+      this.totalPages = Math.ceil(result.count / 10);
+      this.currentPage = page;
+      this.nextPage = this.currentPage < this.totalPages ? this.currentPage + 1 : null;
+  
+      if (this.paginationMode === 'scroll') {
+        this.resources = [...this.resources, ...result.resources];
+      } else {
+        this.resources = result.resources;
+      }
+      this.showSkeletons = false;
       this.isLoading = false;
       this.scrollEnabled = true;
-      this.showSkeletons = false;
     });
   }
+  
   
   
   checkAndAutoFetchMore(): void {

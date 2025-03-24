@@ -1,15 +1,30 @@
 <div class="collection"><!-- *ngIf="!isLoading"> -->
   <h1 class="page-title">{{ tabName | titlecase }}</h1>
-  <div class="filters" *ngIf="filters.length > 0">
-    <ng-container *ngFor="let filter of filters">
-      <input
-        type="text"
-        class="filter-input"
-        [placeholder]="'Search by ' + filter"
-        [(ngModel)]="filterValues[filter]"
-        (ngModelChange)="onFilterChange(filter, $event)"
-      />
-    </ng-container>
+  <div class="options-container">
+    <div class="toggle-container">
+      <div class="pagination-toggle">
+        <label class="switch-with-label">
+          <input type="checkbox" [checked]="paginationMode === 'scroll'" (change)="togglePaginationMode()" />
+          <span class="slider">
+            <span class="label" [class.scroll]="paginationMode === 'scroll'" [class.next]="paginationMode === 'buttons'">
+              {{ paginationMode === 'scroll' ? 'Scroll' : 'Next' }}
+            </span>
+          </span>
+        </label>
+      </div>
+      <label class="pagination-title">Pagination</label>
+    </div>
+    <div class="filters" *ngIf="filters.length > 0">
+      <ng-container *ngFor="let filter of filters">
+        <input
+          type="text"
+          class="filter-input"
+          [placeholder]="'Search by ' + filter"
+          [(ngModel)]="filterValues[filter]"
+          (ngModelChange)="onFilterChange(filter, $event)"
+        />
+      </ng-container>
+    </div>
   </div>
   <div *ngIf="loadError" class="retry-wrapper">
     <div class="retry-container">
@@ -28,6 +43,11 @@
       <div class="card-skeleton" *ngFor="let n of skeletonArray"></div>
     </ng-container>
   </div>
+  <div *ngIf="showPaginationButtons" class="pagination-buttons">
+    <button (click)="goToPrevPage()" [disabled]="currentPage === 1">Back</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="goToNextPage()" [disabled]="!nextPage">Next</button>
+  </div>  
   <app-expanded-card
     *ngIf="selectedResource"
     [resource]="selectedResource"
