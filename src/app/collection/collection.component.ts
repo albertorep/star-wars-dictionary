@@ -128,6 +128,11 @@ export class CollectionComponent implements OnInit {
         )
         .subscribe((filteredResources) => {
           this.resources = filteredResources;
+          this.itemCount = filteredResources.length;
+          this.totalPages = Math.ceil(filteredResources.length / 10);
+          this.currentPage = 1;
+          this.nextPage = this.totalPages > 1 ? 2 : null;
+          this.pageFinished = true;
         });
     });
     
@@ -160,11 +165,12 @@ export class CollectionComponent implements OnInit {
           })
         )
         .subscribe(filteredResources => {
-          if (filteredResources.length > 0) {
-            this.resources = filteredResources;
-            this.nextPage = null;
-            this.pageFinished = true;
-          }
+          this.resources = filteredResources;
+          this.itemCount = filteredResources.length;
+          this.totalPages = Math.ceil(filteredResources.length / 10);
+          this.currentPage = 1;
+          this.nextPage = this.totalPages > 1 ? 2 : null;
+          this.pageFinished = true;
         });
     });
   }
