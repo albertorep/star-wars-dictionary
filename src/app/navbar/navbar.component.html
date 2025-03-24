@@ -1,23 +1,25 @@
-<div class="navbar">
-    <div class="navbar-content">
-        <div class="navbar-content-header">
-            <!-- <img [src]="logoPath" alt="Star Wars Logo" class="logo" /> -->
-            <app-icon class="logo" [width]="'80px'" [isSquare]="true" name="main"></app-icon>
-        </div>
-        <ul class="primary-navigation">
-            <li
-              *ngFor="let tab of tabInfo"
-              [ngClass]="{ 'selected-tab': currentTab === tab.path }"
-            >
-              <a (click)="onTabIndexChanged(tab)">
-                {{ tab.name }}
-              </a>
-              <span class="header-line"></span>
-            </li>
-          </ul>
-        <div class="secondary-navigation">
-            <app-theme-toggle></app-theme-toggle>
-        </div>
+<div
+  class="navbar"
+  [class.mobile]="isMobileNav"
+  [class.expanded]="isMobileNav && isExpanded"
+  (click)="toggleNav()"
+>
+  <div class="navbar-content">
+    <div class="navbar-content-header">
+      <app-icon class="logo" [width]="'40px'" [isSquare]="true" name="main"></app-icon>
     </div>
+
+    <ul class="primary-navigation">
+      <li *ngFor="let tab of tabInfo" [ngClass]="{ 'selected-tab': currentTab === tab.path }">
+        <a (click)="onTabIndexChanged(tab)">
+          {{ tab.name }}
+        </a>
+        <span class="header-line"></span>
+      </li>
+    </ul>
+
+    <div class="secondary-navigation">
+      <app-theme-toggle></app-theme-toggle>
+    </div>
+  </div>
 </div>
-  

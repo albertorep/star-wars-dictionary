@@ -1,3 +1,5 @@
+@use '../../src/styles/layout/breakpoints' as bp;
+
 .app {
     height: 100%;
     &-loading {
