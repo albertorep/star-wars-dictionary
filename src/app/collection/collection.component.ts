@@ -170,7 +170,7 @@ export class CollectionComponent implements OnInit {
   }
   
   togglePaginationMode() {
-    this.showSkeletons = false;
+    if(!this.scrollEnabled) return;
     if (this.paginationMode === 'scroll') {
       this.paginationMode = 'buttons';
       if(!this.scrollEnabled){
@@ -191,7 +191,7 @@ export class CollectionComponent implements OnInit {
         this.scrollEnabled = false;
         this.showSkeletons = true;
         this.pageFinished = false;
-        this.fetchPage(1);
+        this.fetchPage(1, true);
       }
       else if(!this.pageFinished && this.nextPage){
         this.scrollEnabled = false;
@@ -203,6 +203,7 @@ export class CollectionComponent implements OnInit {
   
   
   goToNextPage() {
+    if(!this.scrollEnabled) return;
     if (this.nextPage) {
       this.fetchPage(this.nextPage);
     }
@@ -210,13 +211,14 @@ export class CollectionComponent implements OnInit {
   
   goToPrevPage() {
     const prevPage = this.currentPage > 1 ? this.currentPage - 1 : 1;
+    if(!this.scrollEnabled) return;
     if (prevPage !== this.currentPage) {
       this.fetchPage(prevPage);
     }
   }
   
   
-  fetchPage(page: number): void {
+  fetchPage(page: number, checkForAutoFetchMore?: boolean): void {
     if (!this.tabName) return;
   
     this.isLoading = true;
@@ -242,7 +244,7 @@ export class CollectionComponent implements OnInit {
         this.isLoading = false;
         return;
       }
-  
+
       this.itemCount = result.count;
       this.totalPages = Math.ceil(result.count / 10);
       this.currentPage = page;
@@ -256,6 +258,9 @@ export class CollectionComponent implements OnInit {
       this.showSkeletons = false;
       this.isLoading = false;
       this.scrollEnabled = true;
+      if(page === 1 && this.paginationMode === 'scroll' && checkForAutoFetchMore){
+        this.checkAndAutoFetchMore();
+      }
     });
   }
   

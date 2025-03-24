@@ -4,7 +4,7 @@
     <div class="toggle-container">
       <div class="pagination-toggle">
         <label class="switch-with-label">
-          <input type="checkbox" [checked]="paginationMode === 'scroll'" (change)="togglePaginationMode()" />
+          <input type="checkbox" [checked]="paginationMode === 'scroll'" (change)="togglePaginationMode()" [disabled]="!scrollEnabled"/>
           <span class="slider">
             <span class="label" [class.scroll]="paginationMode === 'scroll'" [class.next]="paginationMode === 'buttons'">
               {{ paginationMode === 'scroll' ? 'Scroll' : 'Next' }}
