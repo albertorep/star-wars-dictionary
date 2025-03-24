@@ -14,4 +14,43 @@
   background: url('../../assets/icons/star-retry.svg') no-repeat center center !important;
   background-size: contain !important;
 }
+
+.icon-Home {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/home.svg') no-repeat center center !important;
+  background-size: contain !important;
+}
+
+.icon-People {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/people.svg') no-repeat center center !important;
+  background-size: contain !important;
+}
+
+.icon-Films {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/film.png') no-repeat center center !important;
+  background-size: contain !important;
+}
+.icon-Planets {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/planets.png') no-repeat center center !important;
+  background-size: contain !important;
+}
+.icon-Species {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/species.svg') no-repeat center center !important;
+  background-size: contain !important;
+}
+.icon-Starships {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/starships.png') no-repeat center center !important;
+  background-size: contain !important;
+}
+
+.icon-Vehicles {
+  @extend .icon-button-base;
+  background: url('../../assets/icons/vehicles.png') no-repeat center center !important;
+  background-size: contain !important;
+}
   

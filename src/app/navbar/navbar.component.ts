@@ -1,14 +1,16 @@
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { IconComponent } from '../icon/icon.component';
 import { StarWarsService } from '../services/swapi-data.service';
 import { Tab } from '../interfaces/tab.interface';
+import { ScreenService } from '../screen/screen.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [NgClass, RouterLink, ThemeToggleComponent, NgFor, IconComponent],
+  imports: [NgClass, RouterLink, ThemeToggleComponent, NgFor, IconComponent, NgIf],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
@@ -18,8 +20,13 @@ export class NavbarComponent implements OnInit {
 
   isMobileNav = false;
   isExpanded = false;
+  private destroy$: Subject<void> = new Subject<void>();
+  constructor(private swService: StarWarsService, private router: Router, private screenService: ScreenService) {}
 
-  constructor(private swService: StarWarsService, private router: Router) {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.swService.getCategories().subscribe((tabs) => {
@@ -38,9 +45,10 @@ export class NavbarComponent implements OnInit {
       }
     });
 
-    if (window.innerWidth <= 768) {
-      this.isMobileNav = true;
-    }
+    this.screenService.screenSize(this.destroy$).subscribe((isMobile) => {
+      console.log("isMobile", isMobile);
+      this.isMobileNav = isMobile;
+    });
   }
 
   toggleNav(): void {
@@ -59,7 +67,7 @@ export class NavbarComponent implements OnInit {
   onTabIndexChanged(tab: any): void {
     this.currentTab = tab.path;
     this.router.navigate([tab.path || '']);
-    if (this.isMobileNav) this.isExpanded = false;
+    //if (this.isMobileNav) this.isExpanded = false;
   }
 }
 

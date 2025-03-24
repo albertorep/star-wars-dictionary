@@ -12,6 +12,9 @@ body {
   h1{
     color: black;
   }
+  @include bp.respond-to(mobile) {
+    padding-left: 60px;
+  }
 }
 
 :root {
@@ -20,6 +23,7 @@ body {
   --card-background-color: #f4f4f4;
   --filter-background-color: #f4f4f4;
   --filter-text-color: #111;
+  --skeleton-background-color: rgb(216, 216, 216);
 }
 
 /* Dark mode */
@@ -29,6 +33,7 @@ body.dark-theme {
   --card-background-color: #1a1a1a;
   --filter-background-color: #1a1a1a;
   --filter-text-color: #b0bec5;
+  --skeleton-background-color: #1d1d1d;
   background-color: #121212;
   color: white;
   a{

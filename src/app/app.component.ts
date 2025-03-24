@@ -4,6 +4,8 @@ import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgClass, NgIf } from '@angular/common';
 import { StarWarsService } from './services/swapi-data.service';
+import { Subject } from 'rxjs';
+import { ScreenService } from './screen/screen.service';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +17,20 @@ export class AppComponent {
   title = 'starWarsApp';
   showLoader = true;
   fadeOutLoader = false;
-
-  constructor(private swService: StarWarsService) {
+  private destroy$: Subject<void> = new Subject<void>();
+  constructor(private swService: StarWarsService, private screenService: ScreenService) {
     this.swService.tabsLoading$.subscribe((loading) => {
       if(loading === false) this.finishLoading();
     });
+  }
+
+  async ngOnInit(){
+    this.screenService.trackBreakpoints(this.destroy$);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   finishLoading() {

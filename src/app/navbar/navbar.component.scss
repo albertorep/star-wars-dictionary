@@ -1,83 +1,131 @@
 @use '../../styles/layout/breakpoints' as bp;
 
 .navbar {
-    position: fixed;
-    z-index: 10;
-    width: 100%;
-    height: fit-content;
-    transition: background 250ms;
-    background-color: var(--app-background-color);
-    top: 0;
-    right: 0;
-    box-shadow: 0 4px 4px rgb(13 150 239 / 10%);
-    &-content{
-      height: 108px;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: fit-content;
+  transition: background 250ms;
+  background-color: var(--app-background-color);
+  top: 0;
+  left: 0;
+  box-shadow: 0 4px 4px rgb(13 150 239 / 10%);
+  transition: width 0.3s ease;
+
+  @include bp.respond-to(mobile) {
+    width: 60px;
+    height: 100vh;
+    flex-direction: column;
+    overflow: hidden;
+    &.expanded {
+      width: 150px;
+    }
+  }
+
+  &-content {
+    height: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 72px;
+    transition: height 250ms;
+
+    @include bp.respond-to(mobile) {
+      flex-direction: column;
+      height: 100%;
+      padding: 1rem 0.5rem;
+      justify-content: flex-start;
+    }
+
+    &-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 72px;
-      transition: height 250ms;
-      &-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
+      justify-content: center;
+      position: relative;
 
-        .logo{
-          margin-right: 42px;
+      .logo {
+        margin-right: 42px;
+
+        @include bp.respond-to(mobile) {
+          margin-right: 0;
         }
       }
     }
   }
-  
-  .navbar-header {
-    display: flex;
-    align-items: center;
-  }
-  
+
   .primary-navigation {
     list-style: none;
     display: flex;
     margin: 0;
     padding: 0;
     overflow-y: hidden;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 
     &::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
+      display: none;
+    }
+
+    @include bp.respond-to(mobile) {
+      flex-direction: column;
+      padding: 4rem 0;
+      overflow-y: auto;
+      gap: 20px;
+    }
+
+    li {
+      margin: 0 10px;
+      position: relative;
+
+      @include bp.respond-to(phonePortrait) {
+        margin: 0 5px;
+      }
+
+      @include bp.respond-to(phone) {
+        margin: 0 5px;
+      }
+
+      @include bp.respond-to(mobile) {
+        white-space: nowrap;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      &.expanded {
+        @include bp.respond-to(mobile) {
+          flex-direction: row;
+          align-items: center;
+          gap: 10px;
+        }
+      }
+
+      a {
+        text-decoration: none;
+        font-weight: 500;
+        cursor: pointer;
+
+        @include bp.respond-to(mobile) {
+          font-size: 16px;
+          display: inline-block;
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+      }
     }
   }
-  
-  .primary-navigation li {
-    margin: 0 10px;
-    position: relative;
-    @include bp.respond-to(phonePortrait){
-      margin: 0 5px;
+
+  &.expanded .primary-navigation li a {
+    @include bp.respond-to(mobile) {
+      opacity: 1;
     }
-    @include bp.respond-to(phone){
-      margin: 0 5px;
-    }
-    
   }
-  
-  .primary-navigation li a {
-    text-decoration: none;
-    /* color: #333; */
-    font-weight: 500;
-    cursor: pointer;
-    @include bp.respond-to(mobile){
-      font-size: 16px;
-    }
-/*     @include bp.respond-to(phone){
-      font-size: 10px;
-    } */
-  }
-  
+
   .selected-tab a {
     color: #007bff;
   }
-  
+
   .header-line {
     display: block;
     height: 2px;
@@ -88,76 +136,24 @@
     left: 0;
     visibility: hidden;
   }
-  
+
   .selected-tab .header-line {
     visibility: visible;
   }
-  
+
   .secondary-navigation {
     margin-left: auto;
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    @include bp.respond-to(mobile) {
+      width: 100%;
+      justify-content: center;
+    }
   }
-  
+
   .provider-logo {
     height: 30px;
   }
-  
-
-  @include bp.respond-to(mobile) {
-    .navbar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 100vh;
-      width: 60px;
-      flex-direction: column;
-      transition: width 0.3s ease;
-      overflow: hidden;
-  
-      &.expanded {
-        width: 200px;
-      }
-  
-      &-content {
-        flex-direction: column;
-        height: 100%;
-        padding: 1rem 0.5rem;
-        &-header{
-          .logo{
-            margin: 0;
-          }
-          
-        }
-      }
-  
-      .primary-navigation {
-        flex-direction: column;
-        padding: 1rem 0;
-        overflow-y: auto;
-      }
-  
-      .primary-navigation li {
-        white-space: nowrap;
-        overflow: hidden;
-      }
-  
-      .primary-navigation li a {
-        display: inline-block;
-        opacity: 0;
-        transition: opacity 0.2s ease;
-      }
-  
-      &.expanded .primary-navigation li a {
-        opacity: 1;
-      }
-  
-      .secondary-navigation {
-        margin-top: auto;
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  }
-  
+}

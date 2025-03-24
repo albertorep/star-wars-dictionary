@@ -6,15 +6,23 @@
 >
   <div class="navbar-content">
     <div class="navbar-content-header">
-      <app-icon class="logo" [width]="'40px'" [isSquare]="true" name="main"></app-icon>
+      <app-icon *ngIf="isMobileNav" class="logo" [width]="'40px'" [isSquare]="true" name="main"></app-icon>
+      <app-icon *ngIf="!isMobileNav" class="logo" [width]="'60px'" [isSquare]="true" name="main"></app-icon>
     </div>
 
     <ul class="primary-navigation">
-      <li *ngFor="let tab of tabInfo" [ngClass]="{ 'selected-tab': currentTab === tab.path }">
-        <a (click)="onTabIndexChanged(tab)">
+      <li *ngFor="let tab of tabInfo" [ngClass]="{ 'selected-tab': currentTab === tab.path }" [class.expanded]="isMobileNav && isExpanded">
+        <app-icon
+            *ngIf="isMobileNav"
+            class="tab-icon"
+            [width]="'20px'"
+            [isSquare]="true"
+            [name]="tab.name"
+          ></app-icon>
+        <a *ngIf="isMobileNav && isExpanded || !isMobileNav" (click)="onTabIndexChanged(tab)">
           {{ tab.name }}
         </a>
-        <span class="header-line"></span>
+        <span *ngIf="isMobileNav && isExpanded || !isMobileNav" class="header-line"></span>
       </li>
     </ul>
 
