@@ -107,7 +107,7 @@ export class CollectionComponent implements OnInit {
       this.currentPage = 1;
       this.totalPages = Math.ceil(result.count / 10);
       this.nextPage = this.currentPage < this.totalPages ? this.currentPage + 1 : null;
-      this.checkAndAutoFetchMore();
+      if(this.paginationMode === 'scroll') this.checkAndAutoFetchMore();
     });
 
     this.filters.forEach(filter => {
