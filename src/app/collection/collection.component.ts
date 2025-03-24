@@ -10,6 +10,7 @@ import { IconComponent } from '../icon/icon.component';
 import { ExpandedCardComponent } from '../expanded-card/expanded-card.component';
 import { FormsModule } from '@angular/forms';
 import { of, Subject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-collection',
@@ -34,6 +35,7 @@ export class CollectionComponent implements OnInit {
   filterSubjects: Record<string, Subject<string>> = {};
   skeletonCount = 5;
   showSkeletons = false;
+  throwPage: boolean = false;
   skeletonArray = Array.from({ length: this.skeletonCount });
 
 
@@ -58,12 +60,21 @@ export class CollectionComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
+        console.log("event", event);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
+        // Show loader
         this.isLoading = true;
+        if(!this.scrollEnabled){
+          this.throwPage = true;
+        }
+        this.resources = [];
+        this.showSkeletons = true;
+        this.filterValues = {};
+        this.currentPage = 1;
+        this.nextPage = null;
+        this.pageFinished = false;
+        this.loadError = false;
+        this.tabName = event?.url?.split('/')[1] || '';
       }
     });
     this.route.paramMap.subscribe(params => {
@@ -85,6 +96,7 @@ export class CollectionComponent implements OnInit {
   
       this.loadError = false;
       this.resources = result.resources;
+      this.showSkeletons = false;
       this.itemCount = result.count;
       this.currentPage = 1;
       this.totalPages = Math.ceil(result.count / 10);
@@ -160,6 +172,11 @@ export class CollectionComponent implements OnInit {
     this.showSkeletons = true;
   
     this.starWarsService.getResources(this.tabName, page).subscribe(result => {
+      if(this.throwPage){
+        this.scrollEnabled = true;
+        this.throwPage = true;
+        return;
+      }
       if (!result || result.resources.length === 0) {
         if (page === 1) {
           this.resources = [];
